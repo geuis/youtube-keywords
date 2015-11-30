@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 // disable use strict for now so eval() works.
-//'use strict';
+'use strict';
 
 var https = require('https');
 var Q = require('q');
@@ -138,10 +138,12 @@ App.prototype = {
   extractPageJS: function ($) {
     // we can get all of the keywords from on-page js. Its dangerous to just
     // eval it, but that's happening here for the time being to get the data.
-    var window = {}; //eslint-disable-line no-unused-vars
-    var ev = eval($('#player-api ~ script ~ script').html()); //eslint-disable-line no-eval
+    var yt = new Function ('var window = {};' +
+      $('#player-api ~ script ~ script').html() +
+      'return ytplayer;'
+    )();
 
-    return ytplayer.config; //eslint-disable-line
+    return yt.config;
   },
   outputReport: function () {
     // Lots of extra data is available to improve the keyword rankings later.
