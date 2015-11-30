@@ -87,6 +87,9 @@ var App = function (args) {
             var pageData = self.extractPageJS($);
 
             var formatNum = function (str) {
+              if (str === null) {
+                return str;
+              }
               return str.replace(/[,]+/ig, '') * 1;
             };
 
