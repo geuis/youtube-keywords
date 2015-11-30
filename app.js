@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
-'use strict';
+// disable use strict for now so eval() works.
+//'use strict';
 
 var https = require('https');
 var Q = require('q');
@@ -129,7 +130,7 @@ App.prototype = {
         defer.resolve(cheerio.load(data));
       })
       .fail(function (err) {
-        console.log('### SEARCH FAIL: get', err);
+        console.log('SEARCH FAIL: get', err);
       });
 
     return defer.promise;
@@ -138,7 +139,7 @@ App.prototype = {
     // we can get all of the keywords from on-page js. Its dangerous to just
     // eval it, but that's happening here for the time being to get the data.
     var window = {}; //eslint-disable-line no-unused-vars
-    eval($('#player-api ~ script ~ script').html()); //eslint-disable-line no-eval
+    var ev = eval($('#player-api ~ script ~ script').html()); //eslint-disable-line no-eval
 
     return ytplayer.config; //eslint-disable-line
   },
